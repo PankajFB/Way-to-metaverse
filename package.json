@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "express": "^4.17.2",
+    "hbs": "^4.2.0",
+    "mongoose": "^6.1.7",
+    "validator": "^13.7.0"
+  },
+  "name": "registratio-form",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js -e js,hbs"
+
+  },
+  "author": "pankaj",
+  "license": "ISC",
+  "description": ""
+}
