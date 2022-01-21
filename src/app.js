@@ -60,7 +60,7 @@ if(password===confirmpassword){
     })
 
     const registered = await registeremp.save();
-    res.render(https://exp-gemini.lusion.co/motion)
+    res.render("done")
 
 }else{
     res.send("Password and confirmpassowrd is not same")
