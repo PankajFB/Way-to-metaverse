@@ -11,7 +11,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/app.js -e js,hbs"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js -e js,hbs"
 
   },
   "author": "pankaj",
