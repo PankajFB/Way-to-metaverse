@@ -67,7 +67,7 @@ if(password===confirmpassword){
 }
         
     } catch (e) {
-        res.send(e)
+        res.render("notfill")
     }
 })
 
