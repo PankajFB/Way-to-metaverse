@@ -5,6 +5,7 @@ require("../src/db/conn")
 const hbs = require("hbs")
 const Register = require("../src/db/models/register")
 const { json } = require("body-parser")
+const async = require("hbs/lib/async")
 
 const port = process.env.PORT || 5000;
 
@@ -68,6 +69,43 @@ if(password===confirmpassword){
         
     } catch (e) {
         res.render("notfill")
+    }
+})
+
+app.get("/login", (req, res) => {
+    res.render("login")
+})
+
+app.post("/login",async (req, res) => {
+    try{
+       const email = req.body.email;
+       const password = req.body.password;
+      
+       const useremail = await Register.findOne({email:email});
+       console.log(useremail)
+    //    const dbname = useremail.name;
+    //    console.log(dbname)
+
+          if(useremail==null){
+res.render("notreg")
+          }
+       else if(password===useremail.password){
+           console.log("yes the password is correct")
+           res.render("loggedin", {
+               name: useremail.firstname,
+               
+           })
+       }else{
+           console.log("wrong password")
+           res.send('<script>alert("Wrong Password")</script> ')
+        //    res.send("not in database"),
+       }
+
+
+    //    res.send("is it working")
+    }catch(e){
+        
+res.render("notfill")
     }
 })
 
