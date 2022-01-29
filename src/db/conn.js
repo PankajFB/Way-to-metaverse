@@ -1,6 +1,6 @@
 const mongoose =  require("mongoose")
 
-mongoose.connect("mongodb://localhost:27017/empdata", {
+mongoose.connect("mongodb://localhost:27017/empdata2", {
 
 })
 .then(()=>{

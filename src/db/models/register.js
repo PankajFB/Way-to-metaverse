@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs/dist/bcrypt");
+const env = require("dotenv").config();
 const res = require("express/lib/response");
 const async = require("hbs/lib/async");
 const mongoose =  require("mongoose")
@@ -42,7 +43,6 @@ const empSchema = new mongoose.Schema({
     tokens:[{
         token :{
             type:String,
-            required:true
         }
     }]
 })
@@ -56,14 +56,15 @@ empSchema.methods.generateAuthToken = async function(){
         console.log(this._id);
         const token = jwt.sign({_id:this._id.toString()},"iamtherichestmanintheworldandiamironaman");
         this.tokens = this.tokens.concat({token :token})
-        console.log("working fine ")
-        await this.save();
+        const save= await this.save();
+        console.log("working fine....... ")
+        res.send("hello there")
         return token;
     }catch(err){
         res.send("the error is" + err);
         console.log("the error is " +err);
     }
-}
+}    
 
 
 // converting the password into hash

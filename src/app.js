@@ -1,3 +1,4 @@
+const env = require("dotenv").config();
 const express = require("express")
 const app = express()
 const path = require("path")
@@ -8,7 +9,8 @@ const { json } = require("body-parser")
 const async = require("hbs/lib/async")
 const bcrypt = require("bcryptjs/dist/bcrypt")
 
-const port = process.env.PORT || 5000;
+
+const port = process.env.PORT || 8000; 
 
 // to resquest json data on get request 
 // the ablove line works perfectly fine for the postman but for making it use in the HTML form u have to use the below line toooo
@@ -61,19 +63,25 @@ app.post("/", async (req, res) => {
                 youranswer: req.body.youranswer,
             })
 
-            const token = await registeremp.generateAuthToken();
-            console.log(token)
+            // const token = await registeremp.generateAuthToken();
+            // console.log(token)
 
-
-
+             // the res.cookie() is used to set the cookies name to value
+            //  res.cookie("jwt", token, {
+            //     expires: new Date(Date.now() + 30000),
+            //     httpOnly: true
+            // })
+            
             const registered = await registeremp.save();
             res.render("done")
+
 
         } else {
             res.send("Password and confirmpassowrd is not same")
         }
 
     } catch (e) {
+        // res.send(e)
         res.render("notfill")
     }
 })
@@ -92,17 +100,35 @@ app.post("/login", async (req, res) => {
        
         // code for checking the password encripted by the bcrypt hash
         const isMatch = await bcrypt.compare(password,useremail.password)
-        console.log(isMatch)
-
+        console.log("match password :"+isMatch)
+        
+       
+        
         if (useremail == null) {
             res.render("notreg")
         }
         else if (isMatch) {
             console.log("yes the password is correct")
+            
             res.render("loggedin", {
                 name: useremail.firstname,
-
+    
             })
+            
+            // below is the function to make a  token
+            // this is also modifing the hash after single login
+            // const token = await useremail.generateAuthToken();
+            // console.log(token)
+            
+            // the res.cookie() is used to set the cookies name to value
+            // right now this is creating problems so dont use it now its will make your database useless
+            //  res.cookie("jwt", "token", {
+            //             expires: new Date(Date.now() + 3000000),
+            //             httpOnly: true
+            //         })
+
+                
+                
         } else {
             console.log("wrong password")
             res.send('<script>alert("Wrong Password")</script> ')
@@ -113,7 +139,7 @@ app.post("/login", async (req, res) => {
         //    res.send("is it working")
     } catch (e) {
 
-        res.render("notfill")
+        res.render("notreg")
     }
 })
 
